@@ -49,6 +49,10 @@ class Movie{
                 printData(it);
         }
     }
+
+    public Boolean isBlockbuster(){
+        return this.blockbuster;
+    }
 }
 
 class MovieApp{
@@ -59,5 +63,6 @@ class MovieApp{
         Movie movie4 = new Movie("Dhammal",2005,"Hindi","Comedy","12/01","BollyWood");
         Movie.getMovies();
         Movie.getMoviesByType("TollyWood");
+        System.out.println(movie2.isBlockbuster());
     }
 }
