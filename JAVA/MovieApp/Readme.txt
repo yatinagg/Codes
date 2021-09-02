@@ -1,0 +1,1 @@
+MovieApp.java is the main file
