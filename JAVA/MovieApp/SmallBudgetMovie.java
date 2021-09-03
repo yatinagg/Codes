@@ -1,7 +1,7 @@
 /**
   * movies whose budget is less than equal to 30cr
   */
-public class SmallBudgetMovie extends Movie{
+public class SmallBudgetMovie extends Movie implements predictable{
 
 
     /**
@@ -9,7 +9,8 @@ public class SmallBudgetMovie extends Movie{
      * @param budget the budget of the movie
      * @return verdict the verdict of the movie
      */
-    public String calcBoxOfficeVerdict(int collection,int budget){
+    @Override
+    public String predictBoxOfficeVerdict(int collection,int budget){
         int profit = (int)((((double)collection-(double)budget)/(double)collection)*100);
         if(profit<=10)
             this.setVerdict("Flop");
