@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Theater implements show{
+public class Theater{
     int theaterId;
     String theaterName;
     List<Movie> movies;
@@ -30,14 +30,14 @@ public class Theater implements show{
     /**
      * @param id the theaterId to set
      */
-    public void settheaterId(int id) {
+    public void setTheaterId(int id) {
         this.theaterId = id;
     }
     
     /**
      * @param name the theaterName to set
      */
-    public void settheaterName(String name) {
+    public void setTheaterName(String name) {
         this.theaterName = name;
     }
 
@@ -67,23 +67,23 @@ public class Theater implements show{
             if(!flag)
                 System.out.println("Invalid movie name");
         }
-        obj.settheaterId(id);
-        obj.settheaterName(name);
+        obj.setTheaterId(id);
+        obj.setTheaterName(name);
     }
 
     /**
-     * Display the data
+     * Display the data of the object
      */
     @Override
-    public void printData(){
-        System.out.println("Theater ID : "+this.getTheaterId());
-        System.out.println("Theater Name : "+this.getTheaterName());
-        System.out.println("Movies of this theater are");
-        int ind=1;
-        for(Movie mov : this.movies){
-            System.out.println(ind+++". "+mov.getName());
+    public String toString(){
+        String data="";
+        data += "ID : " + this.getTheaterId() + "  ";
+        data += "Name : " + this.getTheaterName() + "  ";
+        data += "Movies of this theater are : ";
+        for(Movie mov : this.movies) {
+            data += mov.getName() + ",";
         }
-        System.out.println();
+        return data;
     }
 
     /**
@@ -93,8 +93,7 @@ public class Theater implements show{
         System.out.println("All Theaters are listed below");
         System.out.println();
         for(Theater th : allTheaters){
-            th.printData();
-            System.out.println();
+            System.out.println(th);
         }
     }
 }

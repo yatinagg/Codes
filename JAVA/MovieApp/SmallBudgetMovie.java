@@ -1,9 +1,25 @@
 /**
   * movies whose budget is less than equal to 30cr
   */
-public class SmallBudgetMovie extends Movie implements predictable{
+public class SmallBudgetMovie extends Movie implements Predictable{
 
 
+    /**
+     * Constructor
+     *
+     * @param name
+     * @param year
+     * @param language
+     * @param genre
+     * @param releaseDate
+     * @param type
+     * @param budget
+     * @param collection
+     */
+    public SmallBudgetMovie(String name, int year, String language, String genre, String releaseDate, String type, int budget, int collection) {
+        super(name, year, language, genre, releaseDate, type, budget, collection);
+        this.setVerdict(this.predictBoxOfficeVerdict(collection, budget));
+    }
     /**
      * @param collection the collectionvalue of the movie
      * @param budget the budget of the movie

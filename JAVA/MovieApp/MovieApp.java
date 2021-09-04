@@ -23,13 +23,35 @@ public class MovieApp{
             choice = Integer.parseInt(br.readLine());
             switch(choice){
                 case 1:
-                    Movie.addMovie();
+                    System.out.println("Add Movie");
+                    String name,language,releaseDate,type,genre;
+                    int year,budget,collection;
+
+                    System.out.print("Enter Movie Name : ");
+                    name = br.readLine();
+                    System.out.print("Enter Movie Year : ");
+                    year = Integer.parseInt(br.readLine());
+                    System.out.print("Enter Movie Language : ");
+                    language = br.readLine();
+                    System.out.print("Enter Movie Genre : ");
+                    genre = br.readLine();
+                    System.out.print("Enter release Date : ");
+                    releaseDate = br.readLine();
+                    System.out.print("Enter Type of movie : ");
+                    type = br.readLine();
+                    System.out.print("Enter Budget of movie (in Cr) : ");
+                    budget = Integer.parseInt(br.readLine());
+                    System.out.print("Enter Collection of movie (in Cr) : ");
+                    collection = Integer.parseInt(br.readLine());
+                    Movie.addMovie(name,year,language,genre,releaseDate,type,budget,collection);
                     break;
                 case 2:
                     Movie.displayMovie();
                     break;
                 case 3:
-                    Movie.displayMovieByType();
+                    System.out.println("Enter Movie Type : ");
+                    type = br.readLine();
+                    Movie.displayMovieByType(type);
                     break;
                 case 4:
                     Movie.displayMovieByBudget();
@@ -40,7 +62,7 @@ public class MovieApp{
                     System.out.println(Movie.isBlockBuster(mov));
                     break;
                 case 6:
-                    Movie.calcverdictOfMovie();
+                    Movie.calcVerdictOfMovie();
                     break;
                 case 7:
                     Theater.addTheater();
