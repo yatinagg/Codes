@@ -3,53 +3,28 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-
-interface Predictable {
-    /**
-     * @param collection collection of the movie
-     * @param budget     budget of the movie
-     * @return String return box office verdict of the movie
-     */
-    String predictBoxOfficeVerdict(int collection, int budget);
-}
-/**
-  * setting up the name and functionalities of movieType
-  */
-enum MovieType{
-    TOLLYWOOD("TOLLYWOOD","DOSA"),BOLLYWOOD("BOLLYWOOD","DAL_MAKHNI"),HOLLYWOOD("HOLLYWOOD","PEPPER_STEAK");
-    String type;
-    String dish;
-    MovieType(String type,String dish){
-        this.type = type;
-        this.dish = dish;
-    }
-    public String getMovieType(){
-        return type;
-    }
-    public String getDish(){
-        return dish;
-    }
-}
-
 /**
   * Movie class that contains data like name,year,genre
   * and functionalities to store and retrieve information of the movies
   */
-class Movie{
+public abstract class Movie {
     private int year;
     private int budget;
     private int collection;
+    private String id;
     private String name;
     private String language;
     private String genre;
     private String releaseDate;
     private String verdict;
     private Boolean blockBuster;
-    MovieType type;
-    static List<Movie> allMovies = new ArrayList<>();
+    private MovieType type;
+    private static int currentId = 001;
+    protected static List<Movie> allMovies = new ArrayList<>();
 
     // Constructor
-    public Movie(String name, int year, String language, String genre, String releaseDate, String type, int budget, int collection){
+    public Movie(String name, int year, String language, String genre, String releaseDate, String type, int budget, int collection) {
+        this.id = "M" + String.format("%03d", currentId++);
         this.name = name;
         this.year = year;
         this.language = language;
@@ -67,8 +42,8 @@ class Movie{
      * @return String return details of movie object
      */
     @Override
-    public String toString(){
-        return name + "  " + year + "  " + language + "  " + genre + "  " + releaseDate + "  " + type.getMovieType() + "  " + type.getDish() + "  " + blockBuster;
+    public String toString() {
+        return id + " " + name + "  " + year + "  " + language + "  " + genre + "  " + releaseDate + "  " + type.getMovieType() + "  " + type.getDish() + "  " + blockBuster;
     }
 
     /**
@@ -144,81 +119,78 @@ class Movie{
     /**
      * function to display all movies
      */
-    public static void displayMovie(){
+    public static void displayMovie() {
         System.out.println("All Movies are listed below");
-        for(Movie mov : allMovies){
+        for(Movie mov : allMovies)
             System.out.println(mov);
-        }
     }
 
     /**
       * function to display movies based on type
       */
-    public static void displayMovieByType(String type) throws IOException{
-        for(Movie mov : allMovies){
-            if(mov.getType().getMovieType().equals(type)){
+    public static void displayMovieByType(String type) throws IOException {
+        for(Movie mov : allMovies) {
+            if(mov.getType().getMovieType().equals(type))
                 System.out.println(mov);
-            }
         }
     }
 
     /**
       * function to display movies based on budget
       */
-    public static void displayMovieByBudget() throws IOException{
+    public static void displayMovieByBudget() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter budget (in cr): ");
         int budget = Integer.parseInt(br.readLine());
-        for(Movie mov : allMovies){
-            if(mov.getBudget()==budget){
+        for(Movie mov : allMovies) {
+            if(mov.getBudget() == budget)
                 System.out.println(mov);
-            }
         }
     }
 
     /**
      * function to add a movie
      */
-    public static void addMovie(String name, int year, String language,String genre, String releaseDate, String type, int budget, int collection) throws IOException{
-
-
-        if(budget<=30){
-            SmallBudgetMovie obj1 = new SmallBudgetMovie(name, year, language, genre, releaseDate, type, budget, collection);
-            obj1.setVerdict(obj1.predictBoxOfficeVerdict(collection,budget));
-        }
-        else{
-            LargeBudgetMovie obj2 = new LargeBudgetMovie(name, year, language, genre, releaseDate, type, budget, collection);
-            obj2.setVerdict(obj2.predictBoxOfficeVerdict(collection,budget));
-        }   
+    public static void addMovie(String name, int year, String language,String genre, String releaseDate, String type, int budget, int collection) throws IOException {
+        if(budget <= 30)
+            new SmallBudgetMovie(name, year, language, genre, releaseDate, type, budget, collection);
+        else
+            new LargeBudgetMovie(name, year, language, genre, releaseDate, type, budget, collection);
     }
 
     /**
      * function to calculate and display the verdict of a movie
      */
-    public static void calcVerdictOfMovie() throws IOException{
+    public static void calcVerdictOfMovie() throws IOException {
         String name;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter name of movie: ");
         name = br.readLine();
-        String verdict="";
-        for(Movie mov : allMovies){
-            if(mov.getName().equals(name)){
+        String verdict = "";
+        for(Movie mov : allMovies) {
+            if(mov.getName().equals(name))
                 verdict = mov.getVerdict();
-            }
         }
         System.out.println(verdict);
     }
 
     /**
-     * @param name the name to check
+     * @param name the name of the movie
+     * @return Movie return the object with the movie name
+     */
+    public static Movie getMovieObjectByName(String name) {
+        for(Movie mov : allMovies) {
+            if(mov.name.equals(name))
+                return mov;
+        }
+        return null;
+    }
+
+    /**
      * @return Boolean return true if blockbuster else false
      */
-    public static Boolean isBlockBuster(String name){
-        for(Movie mov : allMovies){
-            if(mov.name.equals(name)){
-                return mov.blockBuster;
-            }
-        }
-        return false;
+    public Boolean isBlockBuster() {
+        return this.blockBuster;
     }
+
 }

@@ -4,13 +4,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Theater{
-    int theaterId;
-    String theaterName;
-    List<Movie> movies;
-    static List<Theater> allTheaters = new ArrayList<>();
-    Theater(){
+public class Theater {
+    private final int theaterId;
+    private String theaterName;
+    private List<Movie> movies;
+    private static List<Theater> allTheaters = new ArrayList<>();
+    Theater(int id, String theaterName) {
         movies = new ArrayList<>();
+        theaterId = id;
+        this.theaterName = theaterName;
     }
 
     /**
@@ -28,72 +30,36 @@ public class Theater{
     }
 
     /**
-     * @param id the theaterId to set
-     */
-    public void setTheaterId(int id) {
-        this.theaterId = id;
-    }
-    
-    /**
-     * @param name the theaterName to set
-     */
-    public void setTheaterName(String name) {
-        this.theaterName = name;
-    }
-
-    /**
      * function to add a theater
      */
-    public static void addTheater() throws IOException{
-        Theater obj = new Theater();
+    public static void addTheater(int id, String TheaterName, List<Movie> movies) throws IOException {
+        Theater obj = new Theater(id, TheaterName);
         allTheaters.add(obj);
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Enter Theater id : ");
-        int id = Integer.parseInt(br.readLine());
-        System.out.print("Enter Theater name : ");
-        String name = br.readLine();
-        System.out.print("Enter number of movies : ");
-        int num = Integer.parseInt(br.readLine());
-        for(int i=0;i<num;i++){
-            System.out.print("Enter movie name : ");
-            String movieName = br.readLine();
-            Boolean flag = false;
-            for(Movie mov : Movie.allMovies){
-                if(mov.getName().equals(movieName)){
-                    flag = true;
-                    obj.movies.add(mov);
-                }
-            }
-            if(!flag)
-                System.out.println("Invalid movie name");
-        }
-        obj.setTheaterId(id);
-        obj.setTheaterName(name);
+        for(Movie mov : movies)
+            obj.movies.add(mov);
     }
 
     /**
      * Display the data of the object
      */
     @Override
-    public String toString(){
-        String data="";
+    public String toString() {
+        String data = "";
         data += "ID : " + this.getTheaterId() + "  ";
         data += "Name : " + this.getTheaterName() + "  ";
         data += "Movies of this theater are : ";
-        for(Movie mov : this.movies) {
+        for(Movie mov : this.movies)
             data += mov.getName() + ",";
-        }
         return data;
     }
 
     /**
      * function to display all theaters
      */
-    public static void displayTheater(){
+    public static void displayTheater() {
         System.out.println("All Theaters are listed below");
         System.out.println();
-        for(Theater th : allTheaters){
+        for(Theater th : allTheaters)
             System.out.println(th);
-        }
     }
 }
